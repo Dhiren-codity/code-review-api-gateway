@@ -12,4 +12,3 @@ RSpec.describe Api::V1::HealthController, type: :controller do
     end
   end
 end
-

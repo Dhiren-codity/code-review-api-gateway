@@ -23,4 +23,3 @@ group :development do
   gem "listen"
   gem "byebug"
 end
-

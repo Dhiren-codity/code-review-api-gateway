@@ -11,4 +11,3 @@ module CodeReviewApi
     config.time_zone = "UTC"
   end
 end
-

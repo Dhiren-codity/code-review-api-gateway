@@ -6,4 +6,3 @@ class Review < ApplicationRecord
   belongs_to :author, class_name: "User", optional: true
   has_many :comments, dependent: :destroy
 end
-
