@@ -1,6 +1,8 @@
 module Api
   module V1
     class HealthController < ApplicationController
+      skip_before_action :authenticate_request
+
       def check
         render json: {
           status: "healthy",
@@ -11,4 +13,3 @@ module Api
     end
   end
 end
-

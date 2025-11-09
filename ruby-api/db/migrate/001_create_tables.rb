@@ -2,7 +2,8 @@ class CreateTables < ActiveRecord::Migration[7.1]
   def change
     create_table :users do |t|
       t.string :email, null: false
-      t.string :name
+      t.string :name, null: false
+      t.string :password_digest, null: false
       t.timestamps
     end
 
@@ -12,16 +13,15 @@ class CreateTables < ActiveRecord::Migration[7.1]
       t.string :title, null: false
       t.text :content, null: false
       t.string :status, default: "pending"
-      t.references :author, foreign_key: { to_table: :users }
+      t.references :author, foreign_key: {to_table: :users}
       t.timestamps
     end
 
     create_table :comments do |t|
       t.text :content, null: false
       t.references :review, null: false, foreign_key: true
-      t.references :author, foreign_key: { to_table: :users }
+      t.references :author, foreign_key: {to_table: :users}
       t.timestamps
     end
   end
 end
-

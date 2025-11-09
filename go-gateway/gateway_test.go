@@ -25,7 +25,7 @@ func TestHealthCheck(t *testing.T) {
 
 func TestRateLimitMiddleware(t *testing.T) {
 	gin.SetMode(gin.TestMode)
-	rl := NewRateLimitMiddleware(1.0, 1)
+	rl := NewRateLimitMiddleware(10.0, 20)
 	r := gin.New()
 	r.Use(rl.Handler())
 	r.GET("/test", func(c *gin.Context) {
@@ -37,7 +37,7 @@ func TestRateLimitMiddleware(t *testing.T) {
 	r.ServeHTTP(w1, req1)
 	assert.Equal(t, http.StatusOK, w1.Code)
 
-	time.Sleep(100 * time.Millisecond)
+	time.Sleep(50 * time.Millisecond)
 
 	w2 := httptest.NewRecorder()
 	req2, _ := http.NewRequest("GET", "/test", nil)

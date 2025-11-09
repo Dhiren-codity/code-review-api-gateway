@@ -114,19 +114,29 @@ The gateway will be available at `http://localhost:8080`
 ### Gateway Endpoints
 
 - `GET /health` - Gateway health check
-- `GET /api/v1/*` - Proxied to Ruby API (cached)
-- `POST /api/v1/*` - Proxied to Ruby API
-- `PUT /api/v1/*` - Proxied to Ruby API
-- `DELETE /api/v1/*` - Proxied to Ruby API
+- `POST /api/v1/auth/login` - User login (returns JWT tokens)
+- `POST /api/v1/auth/refresh` - Refresh access token
+- `POST /api/v1/auth/validate` - Validate current token
+- `GET /api/v1/*` - Proxied to Ruby API (cached, **requires auth**)
+- `POST /api/v1/*` - Proxied to Ruby API (**requires auth**)
+- `PUT /api/v1/*` - Proxied to Ruby API (**requires auth**)
+- `DELETE /api/v1/*` - Proxied to Ruby API (**requires auth**)
 
 ### Ruby API Endpoints
 
 - `GET /api/v1/health` - API health check
-- `GET /api/v1/reviews` - List all reviews
-- `POST /api/v1/reviews` - Create a review
-- `GET /api/v1/reviews/:id` - Get a review
-- `PUT /api/v1/reviews/:id` - Update a review
-- `DELETE /api/v1/reviews/:id` - Delete a review
+- `POST /api/v1/auth/register` - Register new user
+- `POST /api/v1/auth/login` - Authenticate user (used by gateway)
+- `POST /api/v1/auth/logout` - Logout user
+- `GET /api/v1/reviews` - List all reviews (**requires auth**)
+- `POST /api/v1/reviews` - Create a review (**requires auth**)
+- `GET /api/v1/reviews/:id` - Get a review (**requires auth**)
+- `PUT /api/v1/reviews/:id` - Update a review (**requires auth**)
+- `DELETE /api/v1/reviews/:id` - Delete a review (**requires auth**)
+
+> **Note**: All API endpoints (except auth endpoints) now require JWT authentication. Include `Authorization: Bearer <token>` header in requests.
+
+See [AUTHENTICATION.md](AUTHENTICATION.md) for detailed authentication flow and examples.
 
 ## Testing
 

@@ -46,16 +46,17 @@ jobs:
 
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version-file: ruby-api/.ruby-version
+          ruby-version: "3.2.0"
           bundler-cache: true
           working-directory: ruby-api
 
       - name: Setup database
         working-directory: ruby-api
         run: |
-          bundle exec rails db:create db:schema:load
+          bundle exec rails db:test:prepare
         env:
           DATABASE_URL: postgres://postgres:postgres@localhost:5432/code_review_api_test
+          RAILS_ENV: test
 
       - name: Run tests
         working-directory: ruby-api
@@ -76,7 +77,7 @@ jobs:
 
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version-file: ruby-api/.ruby-version
+          ruby-version: "3.2.0"
           bundler-cache: true
           working-directory: ruby-api
 
@@ -97,7 +98,7 @@ jobs:
 
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version-file: ruby-api/.ruby-version
+          ruby-version: "3.2.0"
           bundler-cache: true
           working-directory: ruby-api
 

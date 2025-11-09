@@ -12,4 +12,3 @@ RSpec.describe Review, type: :model do
     it { should have_many(:comments).dependent(:destroy) }
   end
 end
-

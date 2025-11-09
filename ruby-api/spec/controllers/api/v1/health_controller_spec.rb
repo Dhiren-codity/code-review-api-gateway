@@ -8,7 +8,7 @@ RSpec.describe Api::V1::HealthController, type: :controller do
       json_response = JSON.parse(response.body)
       expect(json_response["status"]).to eq("healthy")
       expect(json_response["service"]).to eq("ruby-api")
+      expect(json_response["timestamp"]).to be_present
     end
   end
 end
-
