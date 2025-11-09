@@ -5,7 +5,7 @@ module Api
 
       def register
         @user = User.new(user_params)
-        @user.password = params[:password]
+        @user.password = params[:password] if params[:password].present?
 
         if @user.save
           render json: {
@@ -27,7 +27,7 @@ module Api
       def login
         @user = User.find_by(email: params[:email])
 
-        if @user && @user.authenticate(params[:password])
+        if @user&.authenticate(params[:password])
           render json: {
             message: "Login successful",
             user: {
