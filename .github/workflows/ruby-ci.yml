@@ -104,4 +104,4 @@ jobs:
       - name: Run brakeman
         working-directory: ruby-api
         run: |
-          bundle exec brakeman --ensure-latest --ensure-ignore-notes --skip-files config/brakeman.ignore
+          bundle exec brakeman --ensure-latest --ensure-ignore-notes
