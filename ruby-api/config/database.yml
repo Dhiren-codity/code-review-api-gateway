@@ -12,10 +12,14 @@ development:
 
 test:
   <<: *default
+  <% if ENV["DATABASE_URL"] %>
+  url: <%= ENV["DATABASE_URL"] %>
+  <% else %>
   database: code_review_api_test
   username: postgres
   password: postgres
   host: localhost
+  <% end %>
 
 production:
   <<: *default
