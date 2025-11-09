@@ -54,7 +54,7 @@ jobs:
         working-directory: ruby-api
         run: |
           bundle exec rails db:create
-          bundle exec rails db:migrate
+          bundle exec rails db:schema:load || bundle exec rails db:migrate
         env:
           DATABASE_URL: postgres://postgres:postgres@localhost:5432/code_review_api_test
           RAILS_ENV: test
