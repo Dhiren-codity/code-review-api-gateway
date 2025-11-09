@@ -11,7 +11,7 @@ import (
 	"os"
 	"time"
 
-	"./auth"
+	"github.com/codity/code-review-gateway/go-gateway/auth"
 	"github.com/gin-gonic/gin"
 	"github.com/go-redis/redis/v8"
 	"golang.org/x/time/rate"
