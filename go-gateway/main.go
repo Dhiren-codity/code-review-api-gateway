@@ -19,7 +19,7 @@ import (
 
 var (
 	rdb         *redis.Client
-	rateLimiter *rate.Limiter
+	rateLimiter *RateLimitMiddleware
 	ctx         = context.Background()
 )
 
@@ -111,7 +111,8 @@ func proxyToRubyAPI(c *gin.Context) {
 		cacheResponse(cacheKey, string(bodyBytes), 5*time.Minute)
 	}
 
-	c.DataFromReader(resp.StatusCode, resp.Header.Get("Content-Type"), resp.Body, nil)
+	bodyBytes, _ := io.ReadAll(resp.Body)
+	c.Data(resp.StatusCode, resp.Header.Get("Content-Type"), bodyBytes)
 }
 
 func healthCheck(c *gin.Context) {
