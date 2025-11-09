@@ -1,0 +1,40 @@
+# Go
+go-gateway/*.exe
+go-gateway/*.exe~
+go-gateway/*.dll
+go-gateway/*.so
+go-gateway/*.dylib
+go-gateway/*.test
+go-gateway/coverage.txt
+go-gateway/vendor/
+
+# Ruby
+ruby-api/.bundle/
+ruby-api/vendor/bundle
+ruby-api/lib/bundler/man/
+ruby-api/*.gem
+ruby-api/*.gem.*
+ruby-api/.ruby-version
+ruby-api/.ruby-gemset
+ruby-api/.rbenv-version
+ruby-api/log/*
+ruby-api/tmp/*
+ruby-api/.byebug_history
+ruby-api/config/master.key
+ruby-api/config/credentials/*.key
+ruby-api/storage/*
+ruby-api/db/*.sqlite3
+ruby-api/db/*.sqlite3-journal
+ruby-api/db/*.sqlite3-*
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+

@@ -1,0 +1,107 @@
+name: Ruby CI
+
+on:
+  push:
+    paths:
+      - "ruby-api/**"
+      - ".github/workflows/ruby-ci.yml"
+  pull_request:
+    paths:
+      - "ruby-api/**"
+      - ".github/workflows/ruby-ci.yml"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: RSpec Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: code_review_api_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/code_review_api_test
+      RAILS_ENV: test
+      RUBY_YJIT_ENABLE: "1"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version-file: ruby-api/.ruby-version
+          bundler-cache: true
+          working-directory: ruby-api
+
+      - name: Setup database
+        working-directory: ruby-api
+        run: |
+          bundle exec rails db:create db:schema:load
+        env:
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/code_review_api_test
+
+      - name: Run tests
+        working-directory: ruby-api
+        run: |
+          bundle exec rspec
+        env:
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/code_review_api_test
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version-file: ruby-api/.ruby-version
+          bundler-cache: true
+          working-directory: ruby-api
+
+      - name: Run standardrb
+        working-directory: ruby-api
+        run: |
+          bundle exec standardrb
+
+  security:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version-file: ruby-api/.ruby-version
+          bundler-cache: true
+          working-directory: ruby-api
+
+      - name: Run brakeman
+        working-directory: ruby-api
+        run: |
+          bundle exec brakeman --ensure-latest --ensure-ignore-notes

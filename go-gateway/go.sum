@@ -1,0 +1,4 @@
+module github.com/codity/code-review-gateway
+
+go 1.24
+
