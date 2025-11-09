@@ -1,6 +1,6 @@
 module github.com/codity/code-review-gateway
 
-go 1.24
+go 1.22
 
 require (
 	github.com/gin-gonic/gin v1.10.0
