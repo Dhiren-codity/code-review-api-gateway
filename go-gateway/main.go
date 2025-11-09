@@ -105,13 +105,12 @@ func proxyToRubyAPI(c *gin.Context) {
 	}
 
 	cacheKey := fmt.Sprintf("cache:%s:%s", c.Request.Method, c.Request.URL.Path)
+	bodyBytes, _ := io.ReadAll(resp.Body)
+	
 	if resp.StatusCode == http.StatusOK && c.Request.Method == "GET" {
-		bodyBytes := make([]byte, 0)
-		resp.Body.Read(bodyBytes)
 		cacheResponse(cacheKey, string(bodyBytes), 5*time.Minute)
 	}
 
-	bodyBytes, _ := io.ReadAll(resp.Body)
 	c.Data(resp.StatusCode, resp.Header.Get("Content-Type"), bodyBytes)
 }
 
