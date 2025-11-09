@@ -14,3 +14,4 @@ Rails.application.configure do
   config.active_support.report_deprecations = false
   config.log_formatter = ::Logger::Formatter.new
 end
+
