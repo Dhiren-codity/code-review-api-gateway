@@ -53,9 +53,7 @@ jobs:
       - name: Setup database
         working-directory: ruby-api
         run: |
-          bundle exec rails db:create
-          bundle exec rails db:schema:load
-          bundle exec rails runner "puts ActiveRecord::Base.connection.tables.inspect"
+          bundle exec rails db:test:prepare
         env:
           DATABASE_URL: postgres://postgres:postgres@localhost:5432/code_review_api_test
           RAILS_ENV: test
